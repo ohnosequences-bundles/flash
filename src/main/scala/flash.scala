@@ -54,7 +54,9 @@ object flashAPI {
 
   trait FlashInputFile { def toSeq: Seq[String] }
 
-  case class PairedEndFiles(val r1: String, val r2: String) extends FlashInputFile { def toSeq: Seq[String] = Seq(r1, r2) }
+  case class PairedEndFiles(val r1: File, val r2: File) extends FlashInputFile {
+    def toSeq: Seq[String] = Seq(r1.getCanonicalPath, r2.getCanonicalPath)
+  }
 
   case class flashCmd(val input: FlashInputFile, val options: List[FlashOption]) {
 
