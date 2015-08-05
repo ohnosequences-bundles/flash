@@ -13,7 +13,7 @@ abstract class Flash(val version: String) extends Bundle(compressinglibs) { flas
 
   lazy val getTarball = Seq(
     "wget",
-    s"http://s3-eu-west-1.amazonaws.com/resources.ohnosequences.com/flash/${flash.version}/${flash.tarball}"
+    s"https://s3-eu-west-1.amazonaws.com/resources.ohnosequences.com/flash/${flash.version}/${flash.tarball}"
   )
 
   lazy val extractTarball = Seq(
