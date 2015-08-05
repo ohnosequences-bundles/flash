@@ -60,7 +60,7 @@ object flashAPI {
 
   case class flashCmd(val input: FlashInputFile, val options: List[FlashOption]) {
 
-    def toSeq: Seq[String] = Seq("flash") ++ (options map { x => x.toSeq }).flatten ++ input.toSeq
+    def toSeq: Seq[String] = Seq("flash") ++ (options flatMap { _.toSeq } ) ++ input.toSeq
   }
 
 }
