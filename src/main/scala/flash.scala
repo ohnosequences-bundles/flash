@@ -5,36 +5,26 @@ import java.io.File
 
 abstract class Flash(val version: String) extends Bundle(compressinglibs) { flash =>
 
-  private def workingDir: String = (new File("")).getCanonicalPath().toString
+  lazy val tarball: String = s"FLASH-${flash.version}.tar.gz"
+  lazy val folder: String = s"FLASH-${flash.version}"
+  lazy val flashBin: String = "flash"
 
-  val tarball: String = s"FLASH-${flash.version}.tar.gz"
-  val folder: String = s"FLASH-${flash.version}"
-  val flashBin: String = "flash"
+  def instructions: AnyInstructions = {
 
-  lazy val getTarball = Seq(
-    "wget",
-    s"https://s3-eu-west-1.amazonaws.com/resources.ohnosequences.com/flash/${flash.version}/${flash.tarball}"
-  )
+    lazy val getTarball = cmd("wget")(
+      s"https://s3-eu-west-1.amazonaws.com/resources.ohnosequences.com/flash/${flash.version}/${flash.tarball}"
+    )
 
-  lazy val extractTarball = Seq(
-    "tar",
-    "-xvzf",
-    s"${flash.tarball}"
-  )
+    lazy val extractTarball = cmd("tar")( "-xvzf", flash.tarball )
 
-  lazy val compile = Seq(
-    "make",
-    "-C",
-    s"${workingDir}/${flash.folder}"
-  )
+    lazy val compile = cmd("make")( "-C", flash.folder )
 
-  lazy val linkBinaries = Seq(
-    "ln",
-    "-s",
-    s"${workingDir}/${flash.folder}/${flash.flashBin}",
-    s"/usr/bin/${flash.flashBin}"
-  )
+    lazy val linkBinaries = cmd("ln")(
+      "-s",
+      new File(s"${flash.folder}/${flash.flashBin}").getCanonicalPath,
+      s"/usr/bin/${flash.flashBin}"
+    )
 
-  final def install: Results =
-    getTarball ->- extractTarball ->- compile ->- linkBinaries ->- success(s"${bundleName} installed")
+    getTarball -&- extractTarball -&- compile -&- linkBinaries
+  }
 }
