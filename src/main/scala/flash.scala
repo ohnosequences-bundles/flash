@@ -3,7 +3,7 @@ package ohnosequencesBundles.statika
 import ohnosequences.statika._, bundles._, instructions._
 import java.io.File
 
-abstract class Flash(val version: String) extends Bundle(compressinglibs) { flash =>
+abstract class Flash(val version: String) extends Bundle(compressinglibs, cdevel) { flash =>
 
   lazy val tarball: String = s"FLASH-${flash.version}.tar.gz"
   lazy val folder: String = s"FLASH-${flash.version}"
