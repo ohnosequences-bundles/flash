@@ -1,8 +1,8 @@
 Nice.scalaProject
 
-name := "flash"
-organization := "ohnosequences-bundles"
-description := "A bundle for flash tool"
+name          := "flash"
+organization  := "ohnosequences-bundles"
+description   := "A bundle for flash tool"
 
 publishBucketSuffix := "era7.com"
 
@@ -12,7 +12,7 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "ohnosequences"         %% "statika"          % "2.0.0-SNAPSHOT",
-  "ohnosequences-bundles" %% "compressinglibs"  % "0.1.0",
-  "org.scalatest"         %% "scalatest"        % "2.2.4" % Test
+  "ohnosequences"         %% "statika"         % "2.0.0-M4",
+  "ohnosequences-bundles" %% "cdevel"          % "0.3.0",
+  "ohnosequences-bundles" %% "compressinglibs" % "0.3.0"
 )

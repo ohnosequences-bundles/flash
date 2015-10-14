@@ -1,0 +1,1 @@
+First release. Gets Flash from Era7 resources S3 bucket and links the binary.
