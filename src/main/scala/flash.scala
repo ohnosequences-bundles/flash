@@ -4,11 +4,14 @@ import ohnosequences.statika._
 import java.io.File
 
 
-abstract class Flash(val version: String) extends Bundle(compressinglibs, cdevel) { flash =>
+abstract class Flash(val version: String) extends Bundle() { flash =>
 
   lazy val tarball: String = s"FLASH-${flash.version}.tar.gz"
   lazy val folder: String = s"FLASH-${flash.version}"
   lazy val flashBin: String = "flash"
+
+  // TODO: probably 'yum install -y automake' is enough?
+  lazy val installDevTools = cmd("yum")("groupinstall", "-y", "Development Tools")
 
   lazy val getTarball = cmd("wget")(
     s"https://s3-eu-west-1.amazonaws.com/resources.ohnosequences.com/flash/${flash.version}/${flash.tarball}"
@@ -24,6 +27,11 @@ abstract class Flash(val version: String) extends Bundle(compressinglibs, cdevel
     s"/usr/bin/${flash.flashBin}"
   )
 
-  def instructions: AnyInstructions = getTarball -&- extractTarball -&- compile -&- linkBinaries
+  def instructions: AnyInstructions =
+    installDevTools -&-
+    getTarball -&-
+    extractTarball -&-
+    compile -&-
+    linkBinaries
 
 }
