@@ -4,6 +4,9 @@ description   := "A bundle for flash tool"
 
 publishBucketSuffix := "era7.com"
 
+crossScalaVersions := Seq("2.11.11", "2.12.3")
+scalaVersion := crossScalaVersions.value.max
+
 libraryDependencies ++= Seq(
   "ohnosequences" %% "statika" % "3.0.0"
 )
